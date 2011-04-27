@@ -1,0 +1,106 @@
+<div id='mainTitle'>
+	<h2><%= h @question.text %></h2>
+</div>
+
+<!-- to answer the question -->
+<form action='/<%= @question.id %>' method="post">
+	<input type='hidden' name='qid' value="<%= @question.id %>">
+	<div>
+		<input id='askQuestionNameText' type="text" name="name" maxlength="30">
+	</div>
+	<div>
+		<textarea id='askQuestionTextBox' name="answer"></textarea>
+	</div>
+	<div id='charactersRemaining'>
+		<span id='charsRemainingSpan'><span id='number'>140</span> Characters Remaining</span><input id='askQuestionSubmitBtn' type="submit">
+	</div>
+</form>
+
+<div>	
+	<% if @answers %>
+		<h3>Top Ranked Responses:</h3>
+	<% else %>
+		<h3 class='error'>No Responses Yet... Will you help us out?</h3>
+	<% end %>
+</div>
+
+<% @answers.each do |answer|
+	thumbsUp = answer.thumbsUp
+	thumbsDown = answer.thumbsDown
+%>
+	<div id='answer_<%=answer.id%>' class='answer'>
+		<div class='answerText'><%=h answer.answer%></div>
+		<div>
+			<button id='up_<%=answer.id%>' class='upBtn feedbackBtn'>
+				<span class='thumbSpan'><%= thumbsUp %></span>
+				<img id="thumbsUpImg" class='thumbImg' alt="" src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif"></img>
+			</button>
+			
+			<button id='down_<%=answer.id%>' class='downBtn feedbackBtn'>
+				<span class='thumbSpan'><%= thumbsDown %></span>
+				<img id="thumbsDownImg" class='thumbImg' alt="" src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif"></img>
+			</button>
+			
+			<span id='feedback_<%=answer.id%>' class='feedBackSpan'>Thanks for your feedback!</span>
+		</div>
+	</div>
+<% end %>
+
+<script type="text/javascript">
+$(function() {
+	$('#askQuestionTextBox').keyup(function(event) {
+		var num = $(this).val().length;
+		$('#number').text(140 - num);
+		
+		if(num > 140)
+		{
+			event.preventDefault();
+			
+			$('#askQuestionTextBox').val($(this).val().slice(0, 140));
+			$('#number').text('0');
+		}
+	});
+	
+	$('.feedbackBtn').click(function() {
+		var pieces = $(this).attr('id').split('_');
+		var answerID = pieces[1];
+		var type = pieces[0];
+		var which = 'y';
+		//if type is neither up, now down, or answerID is not defined
+		if((type == 'up' || type == 'down') || !answerID)
+		{
+			if(type == 'down')
+				which = 'n';
+		}
+		else
+			return;
+
+		$.post('/feedback', { aid: answerID, t: which }, function(data) {
+			if(data == 1)
+			{
+				$('#feedback_'+answerID).fadeIn();
+				
+				$('#up_'+answerID).attr('disabled', true);
+				$('#down_'+answerID).attr('disabled', true);
+				
+				if(which == 'y')
+					$('#up_'+answerID).find('span').text(parseInt($('#up_'+answerID).find('span').text()) + 1);
+				else if(which == 'n')
+					$('#down_'+answerID).find('span').text(parseInt($('#down_'+answerID).find('span').text()) + 1);
+			}
+			else
+			{
+				//change the text to alert a bug, then fade it in
+				$('#feedback_'+answerID).text('You found a bug!');
+				$('#feedback_'+answerID).fadeIn();
+			}
+		});
+		
+	});
+});
+
+//set initial value
+var num = $('#askQuestionTextBox').val().length;
+$('#number').text(140 - num);
+
+</script>

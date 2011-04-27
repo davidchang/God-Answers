@@ -1,0 +1,33 @@
+<div id='mainTitle' class='homeTitle'>
+	<h2>Ask a Question</h2>
+</div>
+
+<form action='/askQuestion' method="post">
+	<textarea id='askQuestionTextBox' name="question"></textarea>
+	<input id='askQuestionSubmitBtn' type="submit">
+	<div id='charactersRemaining'>
+		<span id='number'></span> Characters Remaining
+	</div>
+</form>
+
+<script type="text/javascript">
+$(function() {
+	$('#askQuestionTextBox').keyup(function(event) {
+		var num = $(this).val().length;
+		$('#number').text(140 - num);
+		
+		if(num > 140)
+		{
+			event.preventDefault();
+			
+			$('#askQuestionTextBox').val($(this).val().slice(0, 140));
+			$('#number').text('0');
+		}
+	});
+});
+
+//set initial value
+var num = $('#askQuestionTextBox').val().length;
+$('#number').text(140 - num);
+
+</script>

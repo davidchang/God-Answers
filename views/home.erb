@@ -1,0 +1,13 @@
+<div id='mainTitle' class='homeTitle'>
+	<h2>Popular Questions</h2>
+</div>
+
+<% @questions.each do |question| %>
+
+	<div id='question<%=question.id%>' class='question'>
+		<div class='questionText floatL'><%=h question.text%></div>
+		<div class='floatR'><a href='/<%=question.id%>'>Answer this Question</a></div>
+		<div class='clear'></div>
+	</div>
+
+<% end %>
