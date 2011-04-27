@@ -12,7 +12,8 @@ require 'sinatra/redirect_with_flash'
 enable :sessions
 use Rack::Flash, :sweep => true
 
-DataMapper.setup :default, "sqlite://#{Dir.pwd}/database.db"
+#DataMapper.setup :default, "sqlite://#{Dir.pwd}/database.db"
+DataMapper.setup :default, ENV['DATABASE_URL'] || "sqlite://database.db"
 
 class Question
 	include DataMapper::Resource
