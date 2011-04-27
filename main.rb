@@ -13,7 +13,7 @@ enable :sessions
 use Rack::Flash, :sweep => true
 
 #DataMapper.setup :default, "sqlite://#{Dir.pwd}/database.db"
-DataMapper.setup :default, ENV['DATABASE_URL'] || "sqlite3://database.db"
+DataMapper.setup :default, ENV['DATABASE_URL'] || "sqlite://#{Dir.pwd}/database.db"
 
 class Question
 	include DataMapper::Resource
