@@ -4,7 +4,7 @@ sqlite3
 dm-aggregates
 dm-constraints
 dm-core
-dm-do-apater
+dm-do-adapter
 dm-migrations
 dm-sqlite-adapter
 dm-timestamps
