@@ -1,0 +1,13 @@
+sinatra
+sinatra-redirect-with-flash
+sqlite3
+dm-aggregates
+dm-constraints
+dm-core
+dm-do-apater
+dm-migrations
+dm-sqlite-adapter
+dm-timestamps
+dm-transactions
+dm-validations
+rack-flash
