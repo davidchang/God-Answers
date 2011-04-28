@@ -3,10 +3,11 @@
 </div>
 
 <form action='/askQuestion' method="post">
-	<textarea id='askQuestionTextBox' name="question"></textarea>
-	<input id='askQuestionSubmitBtn' type="submit">
+	<div>
+		<textarea id='askQuestionTextBox' name="question"></textarea>
+	</div>
 	<div id='charactersRemaining'>
-		<span id='number'></span> Characters Remaining
+		<span id='charsRemainingSpan'><span id='number'>140</span> Characters Remaining</span><input id='askQuestionSubmitBtn' type="submit">
 	</div>
 </form>
 

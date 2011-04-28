@@ -1,0 +1,15 @@
+source :rubygems
+
+gem "sinatra"
+gem "sinatra-redirect-with-flash"
+gem "dm-aggregates"
+gem "dm-constraints"
+gem "dm-core"
+gem "dm-do-adapter"
+gem "dm-migrations"
+gem "dm-timestamps"
+gem "dm-transactions"
+gem "dm-validations"
+gem "rack-flash"
+gem "sqlite3"
+gem "dm-sqlite-adapter"
